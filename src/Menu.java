@@ -19,6 +19,7 @@ public class Menu {
         System.out.println ("4- Consulta de buses");
         System.out.println ("5- Registro de reservas");
         System.out.println ("6- Consulta de reservas");
+        System.out.println ("7- Listar disponibilidad por bus");
         System.out.println ("0- Salir del programa\n");
         System.out.println ("Ingrese una opción:");
         int opcion = sc.nextInt ();
@@ -39,6 +40,9 @@ public class Menu {
                         menuPrincipal();break;
 
             case 6 :    listarReserva();
+                        menuPrincipal();break;
+
+            case 7 :    listarDisponibilidad();
                         menuPrincipal();break;
 
             case 0 :    System.exit (0);
@@ -168,5 +172,13 @@ public class Menu {
 
     public static void listarReserva(){
         muni.listarReservas();
+    }
+
+    public static void listarDisponibilidad(){
+        Scanner sc = new Scanner (System.in);
+        System.out.println("* Fecha de reserva (yyyyddmm):\n");
+        String fecha=sc.next();
+
+        muni.listarAsientosDisponiblesPorReservar(fecha);
     }
 }

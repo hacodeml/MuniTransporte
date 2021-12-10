@@ -4,6 +4,7 @@ import dao.BDVecino;
 import model.*;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -186,7 +187,10 @@ public class Municipalidad {
 
     /*********************** MANTENIMIENTO DE RESERVAS ************************/
     public void registrarReserva(Vecino vecino,Bus bus,String fechaReserva) throws IOException {
-        Reserva reserva = new Reserva(vecino,fechaReserva,1,bus);
+        int asientosDisponibles = obtenerAsientosDisponibles(bus,fechaReserva);
+        int asientoAsignado = (bus.getCapacidadMax() - asientosDisponibles )+1;
+
+        Reserva reserva = new Reserva(vecino,fechaReserva,asientoAsignado,bus);
         reservas.add(reserva);
 
         BDReserva.grabarReservas(reservas);
@@ -194,7 +198,7 @@ public class Municipalidad {
 
     public void listarReservas(){
         System.out.printf("%s\t%20s\t%20s\t%10s\t%10s\t%20s\n",
-                "Fecha","Nombres","Dni","Numero de bus","Capacidad","Obsequio");
+                "Fecha","Nombres","Dni","Numero de bus","Asiento","Capacidad","Obsequio");
 
         String obsequio="";
 
@@ -207,13 +211,28 @@ public class Municipalidad {
             }
 
 
-            System.out.printf("%s\t%20s\t%20s\t%10s\t%10s\t%20s\n",
+            System.out.printf("%s\t%20s\t%20s\t%10s\t%10s\t%10s\t%20s\n",
                     r.getFecha(),
                     r.getDniReserva().getNombre(),
                     r.getDniReserva().getDni(),
                     r.getBusAsignado().getNumeroBus(),
+                    r.getAsiento(),
                     r.getBusAsignado().getCapacidadMax(),
                     obsequio);
+        }
+    }
+
+    public void listarAsientosDisponiblesPorReservar(String fecha){
+        int asientosDisponibles;
+
+        System.out.println("Listado de buses " + fecha);
+        System.out.printf("%s\t%20s\t%20s \n", "Número de bus","Capacidad Máx","Asientos Disp.");
+        for (Bus bus:buses) {
+            asientosDisponibles = obtenerAsientosDisponibles(bus,fecha);
+            System.out.printf("%s\t%20s\t%20s \n",
+                    bus.getNumeroBus(),
+                    bus.getCapacidadMax(),
+                    asientosDisponibles);
         }
     }
 }
