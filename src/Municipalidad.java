@@ -143,6 +143,56 @@ public class Municipalidad {
 
     }
 
+    public double obtenerPromedioEdadVecinosAdultoMayor(){
+        int sumaEdades = 0;
+        int contador = 0;
+        double promedio = 0.0;
+
+        for(Vecino v: vecinos){
+            if(v instanceof AdultoMayor){
+                sumaEdades = sumaEdades +  v.getEdad();
+                contador++;
+            }
+        }
+
+        if (contador > 0){
+            promedio = (double) Math.round ((sumaEdades / contador)*10) / 10;
+        }
+
+        return promedio;
+    }
+
+    public List<Vecino> obtenerVecinosQueTienenObsequio(){
+        List<Vecino> arregloVecinosObsequio = new ArrayList<>();
+
+        for(Vecino v: vecinos){
+            if(v.obtenerObsequio()){
+                arregloVecinosObsequio.add(v);
+            }
+        }
+
+        return arregloVecinosObsequio;
+    }
+
+    public double promedioEdadVecinosClubEcoSinObsequio(){
+        int sumaEdades = 0;
+        int contador = 0;
+        double promedio = 0.0;
+
+        for(Vecino v: vecinos){
+            if(v instanceof ClubEcologia && v.obtenerObsequio() == false){
+                sumaEdades = sumaEdades +  v.getEdad();
+                contador++;
+            }
+        }
+
+        if (contador > 0){
+            promedio = (double) Math.round ((sumaEdades / contador)*10) / 10;
+        }
+
+        return promedio;
+    }
+
     /************************* MANTENIMIENTO DE BUSES *************************/
     public void registrarBus(Bus bus) throws IOException {
         int registros = buses.size();
@@ -209,7 +259,6 @@ public class Municipalidad {
             }else{
                 obsequio = ((AdultoMayor)r.getDniReserva()).obsequio();
             }
-
 
             System.out.printf("%s\t%20s\t%20s\t%10s\t%10s\t%10s\t%20s\n",
                     r.getFecha(),

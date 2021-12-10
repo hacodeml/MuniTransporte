@@ -2,6 +2,7 @@ import model.Bus;
 import model.Vecino;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -20,6 +21,9 @@ public class Menu {
         System.out.println ("5- Registro de reservas");
         System.out.println ("6- Consulta de reservas");
         System.out.println ("7- Listar disponibilidad por bus");
+        System.out.println ("8- Obtener promedio edad Vecinos");
+        System.out.println ("9- Obtener Vecinos que tienen Obsequio");
+        System.out.println ("10- Obtener promedio edad Vecinos Club Ecología sin Obsequio");
         System.out.println ("0- Salir del programa\n");
         System.out.println ("Ingrese una opción:");
         int opcion = sc.nextInt ();
@@ -44,6 +48,15 @@ public class Menu {
 
             case 7 :    listarDisponibilidad();
                         menuPrincipal();break;
+
+            case 8 :   obtenerPromedioEdadVecinosAdultoMayor();
+                menuPrincipal();break;
+
+            case 9 :   obtenerVecinosConObsequio();
+                menuPrincipal();break;
+
+            case 10 :   obtenerPromedioEdadClubEcoSinObsequio();
+                menuPrincipal();break;
 
             case 0 :    System.exit (0);
             default :
@@ -116,6 +129,37 @@ public class Menu {
     }
 
     public static void limpiarPantalla(){
+    }
+
+    public static void obtenerPromedioEdadVecinosAdultoMayor(){
+        double promedio = muni.obtenerPromedioEdadVecinosAdultoMayor();
+
+        if(promedio > 0){
+            System.out.println("El promedio de edades de vecinos Adulto Mayor es: "+promedio);
+
+        } else {
+            System.out.println("Aún no se registraron vecinos de tipo Adulto Mayor!");
+        }
+    }
+
+    public static void obtenerVecinosConObsequio(){
+        List<Vecino> arregloVecinosObsequio = muni.obtenerVecinosQueTienenObsequio();
+
+        for(Vecino v: arregloVecinosObsequio){
+            System.out.println(v.toString());
+        }
+    }
+
+    public static void obtenerPromedioEdadClubEcoSinObsequio(){
+        double promedio = muni.promedioEdadVecinosClubEcoSinObsequio();
+        System.out.println("El promedio de edades de vecinos Adulto Mayor es: "+promedio);
+
+        if(promedio > 0){
+            System.out.println("El promedio de edades de vecinos del club de ecología sin obsequio es: "+promedio);
+
+        } else {
+            System.out.println("Aún no se registraron vecinos del club de ecología!");
+        }
     }
 
     /******** MANTENIMIENTO DE BUSES ********/
