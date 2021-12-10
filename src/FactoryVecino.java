@@ -1,5 +1,5 @@
 public class FactoryVecino {
-    //tipo = 1 : retornar ClubEcologia | 2 : retornar Adulto Mayor
+    /*//tipo = 1 : retornar ClubEcologia | 2 : retornar Adulto Mayor
     public static Vecino obtenerVecino(int tipo,String... data){
         switch (tipo){
             case 1 : return new ClubEcologia(
@@ -21,5 +21,5 @@ public class FactoryVecino {
             default: return null;
         }
 
-    }
+    }*/
 }
