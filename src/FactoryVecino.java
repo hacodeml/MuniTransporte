@@ -1,6 +1,10 @@
+import model.AdultoMayor;
+import model.ClubEcologia;
+import model.Vecino;
+
 public class FactoryVecino {
-    /*//tipo = 1 : retornar ClubEcologia | 2 : retornar Adulto Mayor
-    public static Vecino obtenerVecino(int tipo,String... data){
+    //tipo = 1 : retornar ClubEcologia | 2 : retornar Adulto Mayor
+    public static Vecino obtenerVecino(int tipo, String... data){
         switch (tipo){
             case 1 : return new ClubEcologia(
                     data[0],
@@ -21,5 +25,5 @@ public class FactoryVecino {
             default: return null;
         }
 
-    }*/
+    }
 }
