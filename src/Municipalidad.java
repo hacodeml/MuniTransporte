@@ -2,15 +2,15 @@ import dao.BDVecino;
 import model.AdultoMayor;
 import model.ClubEcologia;
 import model.Vecino;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Municipalidad {
+    private static Municipalidad instancia;
     private List<Vecino> vecinos;
 
-    public Municipalidad(){
+    private Municipalidad(){
         vecinos = new ArrayList<>();
 
         try {
@@ -20,6 +20,13 @@ public class Municipalidad {
         } catch (ClassNotFoundException e) {
             vecinos = new ArrayList<>();
         }
+    }
+
+    public static Municipalidad getInstancia(){
+        if(instancia == null){
+            instancia = new Municipalidad();
+        }
+        return instancia;
     }
 
     public void registrarVecino(Vecino vecino) throws Exception {
@@ -53,8 +60,15 @@ public class Municipalidad {
     }
 
     public void listarVecinosAll(){
-        System.out.format("%s %20s %15s %15s %25s %15s %25s %25s \n",
+        System.out.format("%s\t%20s\t%15s\t%15s\t%25s\t%15s\t%20s\t%20s \n",
                 "Nombres","DNI","Edad","Teléfono","Email","Estado Civil","Tipo","Obsequio");
+        System.out.println("=======================================================================================================================================================");
+
+        int registros = vecinos.size();
+
+        if(registros == 0){
+            System.out.println("No hay registros para mostrar");
+        }
 
         for (Vecino v:vecinos) {
             String tipo = "";
@@ -68,7 +82,7 @@ public class Municipalidad {
                 obsequio = ((AdultoMayor)v).obsequio();
             }
 
-            System.out.format("%s %20s %15s %15s %25s %15s %25s %25s\n",
+            System.out.format("%s\t%20s\t%15s\t%15s\t%25s\t%15s\t%20s\t%20s\n",
                     v.getNombre(),
                     v.getDni(),
                     v.getEdad(),
@@ -77,7 +91,9 @@ public class Municipalidad {
                     v.getEstadoCivil(),
                     tipo,
                     obsequio);
-
         }
+
+        System.out.println("\n");
+
     }
 }

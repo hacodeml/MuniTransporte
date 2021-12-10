@@ -3,7 +3,8 @@ import model.Vecino;
 import java.util.Scanner;
 
 public class Menu {
-    static Municipalidad muni = new Municipalidad();
+    //Uso de Singleton
+    private static final Municipalidad muni = Municipalidad.getInstancia();
 
     public static void menuPrincipal(){
         Scanner sc = new Scanner (System.in);
