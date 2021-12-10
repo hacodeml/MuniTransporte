@@ -1,4 +1,5 @@
 import dao.BDVecino;
+import model.AdultoMayor;
 import model.ClubEcologia;
 import model.Vecino;
 
@@ -52,30 +53,31 @@ public class Municipalidad {
     }
 
     public void listarVecinosAll(){
-        System.out.printf("%s %20s %20s %20s %20s %20s %20s \n",
-                "Nombres","DNI","Edad","Teléfono","Email","Estado Civil","Tipo");
+        System.out.format("%s %20s %15s %15s %25s %15s %25s %25s \n",
+                "Nombres","DNI","Edad","Teléfono","Email","Estado Civil","Tipo","Obsequio");
 
         for (Vecino v:vecinos) {
             String tipo = "";
+            String obsequio = "";
 
             if(v instanceof ClubEcologia){
                 tipo ="Club Ecología";
+                obsequio = ((ClubEcologia)v).obsequio();
             }else{
                 tipo ="Adulto Mayor";
+                obsequio = ((AdultoMayor)v).obsequio();
             }
 
-            System.out.printf("%s %20s %20s %20s %20s %20s %20s",
+            System.out.format("%s %20s %15s %15s %25s %15s %25s %25s\n",
                     v.getNombre(),
                     v.getDni(),
                     v.getEdad(),
                     v.getTelefono(),
                     v.getCorreoElectronico(),
                     v.getEstadoCivil(),
-                    tipo);
+                    tipo,
+                    obsequio);
 
-
-
-            System.out.println("");
         }
     }
 }
