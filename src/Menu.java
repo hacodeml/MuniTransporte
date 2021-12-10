@@ -1,5 +1,7 @@
+import model.Bus;
 import model.Vecino;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
@@ -13,6 +15,10 @@ public class Menu {
         System.out.println("******************************************");
         System.out.println ("1- Registro de vecinos");
         System.out.println ("2- Consulta de vecinos");
+        System.out.println ("3- Registro de buses");
+        System.out.println ("4- Consulta de buses");
+        System.out.println ("5- Registro de reservas");
+        System.out.println ("6- Consulta de reservas");
         System.out.println ("0- Salir del programa\n");
         System.out.println ("Ingrese una opción:");
         int opcion = sc.nextInt ();
@@ -23,6 +29,18 @@ public class Menu {
             case 2 :    listarVecinos();
                         menuPrincipal();break;
 
+            case 3 :    registrarBus();
+                        menuPrincipal();break;
+
+            case 4 :    listarBus();
+                        menuPrincipal();break;
+
+            case 5 :    registrarReserva();
+                        menuPrincipal();break;
+
+            case 6 :    listarReserva();
+                        menuPrincipal();break;
+
             case 0 :    System.exit (0);
             default :
                 System.out.println ("Opcion incorrecta");
@@ -31,6 +49,7 @@ public class Menu {
     }
 
     /******* MANTENIMIENTO DE VECINOS *******/
+
     public static void menuRegistrarVecino(){
         Scanner sc = new Scanner (System.in);
         System.out.println("******************************************");
@@ -89,9 +108,65 @@ public class Menu {
     }
 
     public static void listarVecinos(){
-        muni.listarVecinosAll();
+        muni.listarVecinosAll(muni.getVecinos());
     }
 
     public static void limpiarPantalla(){
+    }
+
+    /******** MANTENIMIENTO DE BUSES ********/
+
+    public static void registrarBus(){
+        Scanner sc = new Scanner (System.in);
+
+        System.out.println("Ingrese los datos del bus:\n");
+        System.out.print("Capacidad :");
+        int capacidad = Integer.parseInt(sc.next());
+
+        Bus bus = new Bus();
+        bus.setCapacidadMax(capacidad);
+
+        try {
+            muni.registrarBus(bus);
+            System.out.println("Bus registrado correctamente");
+        } catch (IOException e) {
+            System.out.println("Error al registrar el bus");
+        }
+    }
+
+    public static void listarBus(){
+        muni.listarBus();
+    }
+
+    /******* MANTENIMIENTO DE RESERVA *******/
+    public static void registrarReserva(){
+        Scanner sc = new Scanner (System.in);
+        System.out.println("* Ingrese su dni:\n");
+        String dni=sc.next();
+
+        Vecino veci = muni.buscarVecinoPorDni(dni);
+        if(veci != null){
+            System.out.println("* Fecha de reserva (yyyyddmm):\n");
+            String fecha=sc.next();
+
+            Bus bus = muni.obtenerBusDisponible(fecha);
+            if(bus!=null){
+                try {
+                    muni.registrarReserva(veci,bus,fecha);
+
+                    System.out.println("Asiento reservado correctamente");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                System.out.println("No hay buses disponibles para esta fecha");
+            }
+        }else{
+            System.out.println("Vecino no está registrado, por favor registrese primero !!!!");
+        }
+    }
+
+    public static void listarReserva(){
+        muni.listarReservas();
     }
 }
