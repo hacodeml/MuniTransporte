@@ -21,7 +21,7 @@ public class Menu {
         System.out.println ("5- Registro de reservas");
         System.out.println ("6- Consulta de reservas");
         System.out.println ("7- Listar disponibilidad por bus");
-        System.out.println ("8- Obtener promedio edad Vecinos");
+        System.out.println ("8- Obtener promedio edad Vecinos Adulto Mayor");
         System.out.println ("9- Obtener Vecinos que tienen Obsequio");
         System.out.println ("10- Obtener promedio edad Vecinos Club Ecología sin Obsequio");
         System.out.println ("0- Salir del programa\n");
@@ -137,7 +137,7 @@ public class Menu {
         if(promedio > 0){
             System.out.println("El promedio de edades de vecinos Adulto Mayor es: "+promedio);
 
-        } else {
+        } else if (promedio == 0.0) {
             System.out.println("Aún no se registraron vecinos de tipo Adulto Mayor!");
         }
     }
@@ -152,12 +152,11 @@ public class Menu {
 
     public static void obtenerPromedioEdadClubEcoSinObsequio(){
         double promedio = muni.promedioEdadVecinosClubEcoSinObsequio();
-        System.out.println("El promedio de edades de vecinos Adulto Mayor es: "+promedio);
 
         if(promedio > 0){
             System.out.println("El promedio de edades de vecinos del club de ecología sin obsequio es: "+promedio);
 
-        } else {
+        } else if (promedio == 0.0) {
             System.out.println("Aún no se registraron vecinos del club de ecología!");
         }
     }
